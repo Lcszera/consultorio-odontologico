@@ -2,46 +2,41 @@ package pacote.odonto_package;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 public class Principal extends JFrame {
 
     public Principal() {
 
-        setTitle("Tela Principal do Consultório");
+        setUndecorated(true);
         setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        try {
+        PainelComImagem painelPrincipal = new PainelComImagem("logocons.jpg");
+        this.setContentPane(painelPrincipal);
 
-            String caminhoAbsoluto = "C:\\Users\\Lucas\\Desktop\\Projetos GHub\\consultorio-odontologico\\resources\\logocons.jpg";
+        iniciarTemporizadorDeSplash();
+    }
 
-            javax.swing.ImageIcon icone = new javax.swing.ImageIcon(caminhoAbsoluto);
+    private void iniciarTemporizadorDeSplash() {
+        java.awt.event.ActionListener acaoDoTimer = e -> {
+            new TelaMenu().setVisible(true);
+            this.dispose();
+        };
 
-            if (icone.getIconWidth() == -1) {
-                throw new java.io.IOException("Não foi possível carregar a imagem do caminho especificado. Verifique o caminho e as barras \\\\.");
-            }
-
-            javax.swing.JLabel labelDaImagem = new javax.swing.JLabel(icone);
-            javax.swing.JPanel painelPrincipal = new javax.swing.JPanel();
-            painelPrincipal.add(labelDaImagem);
-            this.add(painelPrincipal);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Erro ao carregar a imagem por caminho absoluto:\n" + e.getMessage(),
-                    "Erro Crítico",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
-
+        Timer temporizador = new Timer(3000, acaoDoTimer);
+        temporizador.setRepeats(false);
+        temporizador.start();
     }
 
     public static void main(String[] args) {
+
+        DatabaseManager.criarTabelaPacientes();
+
         SwingUtilities.invokeLater(() -> {
             Principal telaInicial = new Principal();
             telaInicial.setVisible(true);
         });
     }
-
 }
