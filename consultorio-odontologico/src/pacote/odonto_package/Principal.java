@@ -32,7 +32,7 @@ public class Principal extends JFrame {
 
     public static void main(String[] args) {
 
-        DatabaseManager.criarTabelaPacientes();
+        DatabaseManager.criarTabelas();
 
         SwingUtilities.invokeLater(() -> {
             Principal telaInicial = new Principal();
