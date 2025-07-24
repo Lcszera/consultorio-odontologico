@@ -1,80 +1,73 @@
 package pacote.odonto_package;
 
 import pacote.odonto_package.model.Paciente;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 public class TelaRegistrarPaciente extends JFrame {
 
-    private JTextField campoNomeCompleto;
-    private JTextField campoCpf;
-    private JTextField campoTelefone;
-    private JTextField campoEndereco;
-    private JTextField campoDataNascimento;
+    private final JTextField campoNomeCompleto;
+    private final JTextField campoCpf;
+    private final JTextField campoTelefone;
+    private final JTextField campoEndereco;
+    private final JTextField campoDataNascimento;
 
     public TelaRegistrarPaciente() {
         setTitle("Registrar Novo Paciente");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout(10, 10));
+        setLayout(new GridBagLayout());
+        getContentPane().setBackground(new Color(255, 230, 235));
+
+        JPanel painelConteudo = new JPanel(new BorderLayout(10, 10));
+        painelConteudo.setBackground(Color.WHITE);
+        painelConteudo.setBorder(new EmptyBorder(25, 25, 25, 25));
 
         JPanel painelFormulario = new JPanel(new GridLayout(0, 2, 10, 10));
-        painelFormulario.setBorder(new EmptyBorder(25, 25, 25, 25));
-
+        painelFormulario.setBackground(Color.WHITE);
         Font fonteLabels = new Font("Arial", Font.PLAIN, 14);
 
-        JLabel labelNome = new JLabel("Nome Completo:");
-        labelNome.setFont(fonteLabels);
+        painelFormulario.add(new JLabel("Nome Completo:")).setFont(fonteLabels);
         campoNomeCompleto = new JTextField();
-        painelFormulario.add(labelNome);
         painelFormulario.add(campoNomeCompleto);
 
-        JLabel labelCpf = new JLabel("CPF:");
-        labelCpf.setFont(fonteLabels);
+        painelFormulario.add(new JLabel("CPF:")).setFont(fonteLabels);
         campoCpf = new JTextField();
-        painelFormulario.add(labelCpf);
         painelFormulario.add(campoCpf);
 
-        JLabel labelTelefone = new JLabel("Telefone:");
-        labelTelefone.setFont(fonteLabels);
+        painelFormulario.add(new JLabel("Telefone:")).setFont(fonteLabels);
         campoTelefone = new JTextField();
-        painelFormulario.add(labelTelefone);
         painelFormulario.add(campoTelefone);
 
-        JLabel labelEndereco = new JLabel("Endereço:");
-        labelEndereco.setFont(fonteLabels);
+        painelFormulario.add(new JLabel("Endereço:")).setFont(fonteLabels);
         campoEndereco = new JTextField();
-        painelFormulario.add(labelEndereco);
         painelFormulario.add(campoEndereco);
 
-        JLabel labelDataNascimento = new JLabel("Data de Nascimento (dd/mm/aaaa):");
-        labelDataNascimento.setFont(fonteLabels);
+        painelFormulario.add(new JLabel("Data de Nascimento (dd/mm/aaaa):")).setFont(fonteLabels);
         campoDataNascimento = new JTextField();
-        painelFormulario.add(labelDataNascimento);
         painelFormulario.add(campoDataNascimento);
 
-        JPanel painelContainer = new JPanel(new GridBagLayout());
-        painelContainer.add(painelFormulario);
         JPanel painelBotoes = new JPanel();
+        painelBotoes.setBackground(Color.WHITE);
         JButton btnSalvar = new JButton("Salvar Paciente");
         JButton btnVoltar = new JButton("Voltar ao Menu");
         painelBotoes.add(btnSalvar);
         painelBotoes.add(btnVoltar);
-        btnSalvar.addActionListener(this::salvarPaciente);
+
+        btnSalvar.addActionListener(e -> salvarPaciente());
         btnVoltar.addActionListener(e -> {
             new TelaMenu().setVisible(true);
             this.dispose();
         });
-        add(painelContainer, BorderLayout.CENTER);
-        add(painelBotoes, BorderLayout.SOUTH);
+
+        painelConteudo.add(painelFormulario, BorderLayout.CENTER);
+        painelConteudo.add(painelBotoes, BorderLayout.SOUTH);
+        add(painelConteudo, new GridBagConstraints());
     }
 
-    private void salvarPaciente(ActionEvent e) {
-
+    private void salvarPaciente() {
         String nomeCompleto = campoNomeCompleto.getText();
         String cpf = campoCpf.getText();
         String telefone = campoTelefone.getText();
@@ -82,7 +75,7 @@ public class TelaRegistrarPaciente extends JFrame {
         String dataNasc = campoDataNascimento.getText();
 
         if (nomeCompleto.trim().isEmpty() || cpf.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Nome Completo e CPF são obrigatórios.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Os campos Nome Completo e CPF são obrigatórios.", "Erro de Validação", JOptionPane.ERROR_MESSAGE);
             return;
         }
 

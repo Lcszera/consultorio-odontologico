@@ -39,11 +39,22 @@ public class DatabaseManager {
                 + " FOREIGN KEY (paciente_id) REFERENCES pacientes (id)"
                 + ");";
 
+        String sqlFinanceiro = "CREATE TABLE IF NOT EXISTS financeiro ("
+                + " id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + " descricao TEXT NOT NULL,"
+                + " valor REAL NOT NULL,"
+                + " tipo TEXT NOT NULL,"
+                + " data TEXT NOT NULL,"
+                + " consulta_id INTEGER,"
+                + " FOREIGN KEY (consulta_id) REFERENCES consultas (id)"
+                + ");";
+
         try (Connection conn = conectar();
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(sqlPacientes);
             stmt.execute(sqlConsultas);
+            stmt.execute(sqlFinanceiro);
 
         } catch (SQLException e) {
             System.out.println("Erro ao criar as tabelas: " + e.getMessage());

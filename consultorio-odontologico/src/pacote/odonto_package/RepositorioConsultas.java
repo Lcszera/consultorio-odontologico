@@ -2,10 +2,7 @@ package pacote.odonto_package;
 
 import pacote.odonto_package.model.Consulta;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,4 +38,23 @@ public class RepositorioConsultas {
         }
         return consultas;
     }
+
+    public void agendarConsulta(int pacienteId, String data, String hora, String procedimento) {
+        String sql = "INSERT INTO consultas(paciente_id, data, hora, procedimento, status) VALUES(?, ?, ?, ?, 'Agendada')";
+
+        try (Connection conn = DatabaseManager.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, pacienteId);
+            pstmt.setString(2, data);
+            pstmt.setString(3, hora);
+            pstmt.setString(4, procedimento);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao agendar consulta: " + e.getMessage());
+        }
+    }
+
 }
+

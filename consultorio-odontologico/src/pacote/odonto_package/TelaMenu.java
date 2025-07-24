@@ -1,8 +1,8 @@
 package pacote.odonto_package;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import java.awt.Font;
@@ -21,13 +21,14 @@ public class TelaMenu extends JFrame {
         Font fonteBotoes = new Font("Arial", Font.BOLD, 16);
 
         JPanel painelDeBotoes = new JPanel(new GridLayout(6, 1, 15, 15));
+        painelDeBotoes.setOpaque(false);
 
-        JButton btnRegistrarPaciente = new JButton("Registrar Paciente");
-        JButton btnVisualizarPacientes = new JButton("Visualizar Pacientes");
-        JButton btnAgendarConsulta = new JButton("Agendar Consulta");
-        JButton btnVerConsultas = new JButton("Consultas Agendadas");
-        JButton btnFinanceiro = new JButton("Financeiro");
-        JButton btnSair = new JButton("Sair do Sistema");
+        JButton btnRegistrarPaciente = new JButtonDegrade("Registrar Paciente");
+        JButton btnVisualizarPacientes = new JButtonDegrade("Visualizar Pacientes");
+        JButton btnAgendarConsulta = new JButtonDegrade("Agendar Consulta");
+        JButton btnVerConsultas = new JButtonDegrade("Consultas Agendadas");
+        JButton btnFinanceiro = new JButtonDegrade("Financeiro");
+        JButton btnSair = new JButtonDegrade("Sair do Sistema");
 
         btnRegistrarPaciente.setPreferredSize(tamanhoBotao);
         btnRegistrarPaciente.setFont(fonteBotoes);
@@ -47,21 +48,11 @@ public class TelaMenu extends JFrame {
         btnSair.setPreferredSize(tamanhoBotao);
         btnSair.setFont(fonteBotoes);
 
-        btnRegistrarPaciente.addActionListener(e -> {
-            new TelaRegistrarPaciente().setVisible(true);
-            this.dispose();
-        });
-
-        btnVisualizarPacientes.addActionListener(e -> {
-            new TelaVisualizarPacientes().setVisible(true);
-            this.dispose();
-        });
-
-        btnVerConsultas.addActionListener(e -> {
-            new TelaConsultasAgendadas().setVisible(true);
-            this.dispose();
-        });
-
+        btnRegistrarPaciente.addActionListener(e -> { new TelaRegistrarPaciente().setVisible(true); this.dispose(); });
+        btnVisualizarPacientes.addActionListener(e -> { new TelaVisualizarPacientes().setVisible(true); this.dispose(); });
+        btnVerConsultas.addActionListener(e -> { new TelaConsultasAgendadas().setVisible(true); this.dispose(); });
+        btnFinanceiro.addActionListener(e -> {new TelaFinanceiro().setVisible(true); this.dispose(); });
+        btnAgendarConsulta.addActionListener(e -> {new TelaAgendarConsulta().setVisible(true); this.dispose(); });
         btnSair.addActionListener(e -> System.exit(0));
 
         painelDeBotoes.add(btnRegistrarPaciente);
@@ -72,6 +63,7 @@ public class TelaMenu extends JFrame {
         painelDeBotoes.add(btnSair);
 
         JPanel painelContainer = new JPanel(new GridBagLayout());
+
         painelContainer.add(painelDeBotoes);
 
         add(painelContainer);
